@@ -19,9 +19,17 @@ export default async function FeedPage({ searchParams }: Props) {
   const props = await searchParams;
   const selectedSkill = props.skill;
 
+  const res = await fetch(
+    `http://localhost:3000/api/posts${selectedSkill ? `?skill=${selectedSkill}` : ""}`,
+    { cache: "no-store" }
+  );
 
-  const data = await getFeed();
-  const mockPosts = selectedSkill ? data.feed.filter(post => post.skill === selectedSkill) : data.feed;
+
+  // const data = await getFeed();
+  const data = await res.json();
+  // const mockPosts = selectedSkill ? data.feed.filter(post => post.skill === selectedSkill) : data.feed;
+  const mockPosts = selectedSkill ? data.filter(post => post.skill === selectedSkill) : data;
+
 
   return (
     <div className="min-h-screen bg-app">

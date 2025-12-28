@@ -11,10 +11,20 @@ type Props = {
   setSelectedSkill: (skill: string) => void;
 };
 
-export default function CreatePostEditor({ selectedSkill, setSelectedSkill }: Props) {
+export default function CreatePostEditor() {
+  const [selectedSkill, setSelectedSkill] = useState(skills[0]);
   const [postType, setPostType] = useState(postTypes[0]);
   const [content, setContent] = useState("");
   const maxChars = 500;
+
+  async function handleSubmit() {
+    await fetch("/api/posts", {
+      method: "POST",
+      body: JSON.stringify({ selectedSkill, postType, content }),
+    });
+    alert("Post submitted! (mock)");
+    window.location.href = `/feed?skill=${selectedSkill}`;
+  }
 
   return (
     <div className="frosted bg-app border border-app rounded-xl p-6 space-y-4">
@@ -69,7 +79,7 @@ export default function CreatePostEditor({ selectedSkill, setSelectedSkill }: Pr
         <button
           className="bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] px-4 py-2 rounded hover:opacity-90"
           disabled={content.length === 0}
-          onClick={() => alert("Post submitted! (mock)")}
+          onClick={() => handleSubmit()}
         >
           Post
         </button>
