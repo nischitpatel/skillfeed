@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-     <nav className="navbar-frosted fixed left-1/2 -translate-x-1/2 px-6 py-3 z-50"> 
+     <nav className="navbar-frosted fixed top-1 left-1/2 -translate-x-1/2 px-6 py-3 z-50"> 
 
       <div className="flex justify-center gap-6 text-sm font-bold text-white">
         <Link href="/" className="frosted-hover">
