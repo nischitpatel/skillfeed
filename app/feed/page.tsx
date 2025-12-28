@@ -1,18 +1,12 @@
 import SidebarSkills from "../components/SidebarSkills";
 import FeedPost from "../components/FeedPost";
+import FeedClient from "./FeedClient";
 
 type Props = {
   searchParams : {
     skill?: string;
   };
 };
-
-async function getFeed() {
-  // In Next.js, files in /public are served at the root URL
-  const res = await fetch('http://localhost:3000/feed.json');
-  if (!res.ok) throw new Error('Failed to fetch feed');
-  return res.json();
-}
 
 export default async function FeedPage({ searchParams }: Props) {
 
@@ -23,13 +17,10 @@ export default async function FeedPage({ searchParams }: Props) {
     `http://localhost:3000/api/posts${selectedSkill ? `?skill=${selectedSkill}` : ""}`,
     { cache: "no-store" }
   );
-
-
-  // const data = await getFeed();
   const data = await res.json();
-  // const mockPosts = selectedSkill ? data.feed.filter(post => post.skill === selectedSkill) : data.feed;
-  const mockPosts = selectedSkill ? data.filter(post => post.skill === selectedSkill) : data;
+  // console.log(data);
 
+  const posts = selectedSkill ? data.posts?.filter(post => post.skill === selectedSkill) : data.posts;
 
   return (
     <div className="min-h-screen bg-app">
@@ -42,9 +33,10 @@ export default async function FeedPage({ searchParams }: Props) {
 
         {/* Feed */}
         <main className="col-span-12 md:col-span-6 space-y-4">
-          {mockPosts?.map(post => (
+          {/* {posts?.map(post => (
             <FeedPost key={post.id} post={post} />
-          ))}
+          ))} */}
+          <FeedClient initialPosts={posts} initialCursor={data.nextCursor} skill={selectedSkill}/> 
         </main>
 
         {/* Right Sidebar (placeholder) */}
