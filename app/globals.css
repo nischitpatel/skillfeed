@@ -77,19 +77,15 @@
   }
 
   .frosted-hover {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease; 
   }
 
   .frosted-hover:hover {
     transform: translateY(-1px);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.45) inset,
-      0 14px 40px rgba(0,0,0,0.12);
   }
 
   .navbar-frosted {
-  background-color: black;       /* solid black base */
-  background: rgba(0,0,0,0.7);  /* semi-transparent overlay for frosted look */
+  background: rgba(0, 102, 255, 0.938);  /* semi-transparent overlay for frosted look */
   backdrop-filter: blur(var(--frost-blur)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(180%);
   border-radius: 1.25rem;
