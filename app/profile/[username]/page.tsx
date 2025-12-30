@@ -27,8 +27,8 @@
 // }
 // import ProfileHeader from "@/components/ProfileHeader";
 // import ProfileTabs from "@/components/ProfileTabs";
-import ProfileHeader from "../ProfileHeader";
-import ProfileTabs from "../ProfileTabs";
+import ProfileHeader from "../../components/ProfileHeader";
+import ProfileTabs from "../../components/ProfileTabs";
 
 export default async function ProfilePage() {
   // TEMP data (replace with feed API)

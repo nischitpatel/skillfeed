@@ -1,4 +1,4 @@
-import FeedPost from "../components/FeedPost";
+import FeedPost from "./FeedPost";
 
 type Post = {
   id: string;
