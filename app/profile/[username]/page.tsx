@@ -35,18 +35,21 @@ export default async function ProfilePage() {
   const posts = [
     {
       id: "1",
+      username: "nischitp",
       skill: "JavaScript",
       content: "Array.map returns a new array.",
       createdAt: new Date().toISOString(),
     },
     {
       id: "2",
+      username: "nischitp",
       skill: "Next.js",
       content: "Server Components reduce JS bundle size.",
       createdAt: new Date().toISOString(),
     },
     {
       id: "3",
+      username: "nischitp",
       skill: "JavaScript",
       content: "Closures allow function state.",
       createdAt: new Date().toISOString(),

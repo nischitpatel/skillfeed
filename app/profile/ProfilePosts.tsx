@@ -2,6 +2,7 @@ import FeedPost from "../components/FeedPost";
 
 type Post = {
   id: string;
+  username: string;
   skill: string;
   content: string;
   createdAt: string;
@@ -9,10 +10,10 @@ type Post = {
 
 type Props = {
   posts: Post[];
-  mode: "all" | "skill";
+  // mode: "all" | "skill";
 };
 
-export default function ProfilePosts({ posts, mode }: Props) {
+export default function ProfilePosts({ posts }: Props) {
   if (posts.length === 0) {
     return (
       <p className="text-sm text-gray-500">
