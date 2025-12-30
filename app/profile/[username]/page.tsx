@@ -59,7 +59,7 @@ export default async function ProfilePage() {
   return (
     <main className="max-w-5xl mx-auto px-4 py-8 space-y-8">
       <ProfileHeader
-        name="Kiran Patel"
+        name="Nischit Patel"
         bio="Backend-focused full-stack engineer sharing practical coding lessons."
         totalPosts={totalPosts}
         skillsTaught={skillsTaught}
