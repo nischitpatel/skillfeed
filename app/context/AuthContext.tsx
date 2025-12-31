@@ -1,5 +1,6 @@
+"use client";
+
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { POST } from "../api/posts/route";
 
 type User = {
     id: string,
