@@ -17,6 +17,9 @@ export default function Navbar() {
         <Link href="/create" className="frosted-hover">
           Create
         </Link>
+        <Link href="/login" className="frosted-hover">
+          Login/Sign Up
+        </Link>
       </div>
     </nav>
   );
