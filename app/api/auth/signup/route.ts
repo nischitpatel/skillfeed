@@ -3,7 +3,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 // temporary in memory user store
-const users: any[] = [];
+// const users: any[] = [];
+import { users } from "../_store";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
 
