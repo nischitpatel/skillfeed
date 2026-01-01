@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { email, password } = body;
 
-    // 1️⃣ Validate input
+    // Validate input
     if (!email || !password) {
       return NextResponse.json(
         { error: "Email and password are required" },
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2️⃣ Find user
+    // Find user
     const user = users.find(u => u.email === email);
     if (!user) {
       return NextResponse.json(
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 3️⃣ Compare password
+    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return NextResponse.json(
@@ -36,14 +36,14 @@ export async function POST(req: Request) {
       );
     }
 
-    // 4️⃣ Create JWT
+    // Create JWT
     const token = jwt.sign(
       { userId: user.id, email: user.email },
       JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    // 5️⃣ Set cookie
+    // Set cookie
     const response = NextResponse.json({
       user: {
         id: user.id,
