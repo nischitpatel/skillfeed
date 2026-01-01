@@ -25,11 +25,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const loadUser = async () => {
             try {
-                const res = await fetch("/api/auth/me",{
+                const res = await fetch("/api/auth/me", {
                     credentials: "include",
                 });
 
-                if(!res.ok) {
+                if (!res.ok) {
                     setUser(null);
                     return;
                 }
@@ -81,7 +81,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     async function logout() {
-        // await fetch("api/auth/logout", {method: "POST"});
+        await fetch("api/auth/logout", { 
+            method: "POST", 
+            credentials: "include" 
+        });
+        
         setUser(null);
     }
 
