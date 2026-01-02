@@ -42,7 +42,7 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         
         {/* Logo */}
-        <Link href="/feed" className="text-lg font-semibold">
+        <Link href="/" className="text-lg font-semibold">
           SkillFeed
         </Link>
 
@@ -69,6 +69,12 @@ export default function Navbar() {
           >
             Logout
           </button>
+        )}
+
+        {!user && (
+          <Link href="/login" className="text-sm hover:text-blue-600">
+              Login / Sign up
+            </Link>
         )}
       </div>
     </header>
