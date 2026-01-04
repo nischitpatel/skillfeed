@@ -6,6 +6,10 @@ type Post = {
   skill: string;
   content: string;
   createdAt: string;
+  author: {
+    id: string;
+    name: string;
+  }
 };
 
 type Props = {

@@ -39,6 +39,10 @@ export default async function ProfilePage() {
       skill: "JavaScript",
       content: "Array.map returns a new array.",
       createdAt: new Date().toISOString(),
+      author: {
+        id: "admin1234",
+        name: "admin1234"
+      }
     },
     {
       id: "2",
@@ -46,6 +50,10 @@ export default async function ProfilePage() {
       skill: "Next.js",
       content: "Server Components reduce JS bundle size.",
       createdAt: new Date().toISOString(),
+      author: {
+        id: "admin1234",
+        name: "admin1234"
+      }
     },
     {
       id: "3",
@@ -53,6 +61,10 @@ export default async function ProfilePage() {
       skill: "JavaScript",
       content: "Closures allow function state.",
       createdAt: new Date().toISOString(),
+      author: {
+        id: "admin1234",
+        name: "admin1234"
+      }
     },
   ];
 
