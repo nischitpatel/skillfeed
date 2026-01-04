@@ -4,10 +4,15 @@ import Link from "next/link";
 
 type Post = {
   id: string;
-  username: string;
+  // username: string;
   skill: string;
   content: string;
+  type: string
   createdAt: string;
+  author: {
+    id: string;
+    name: string;
+  }
 };
 
 type Props = {
@@ -24,8 +29,9 @@ export default function FeedPost({ post, variant = "feed" }: Props) {
       {/* Header */}
       <div className="flex items-center gap-3 text-sm text-gray-600">
         <div className="w-8 h-8 rounded-full bg-gray-200" />
-        <span className="font-medium text-gray-900">{post.username}</span>
+        <span className="font-medium text-gray-900">{post.author.name}</span>
         <SkillTag label={post.skill} />
+        <SkillTag label={post.type} />
         <span className="ml-auto text-xs">{post.createdAt}</span>
       </div>
 

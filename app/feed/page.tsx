@@ -18,7 +18,6 @@ export default async function FeedPage({ searchParams }: Props) {
     { cache: "no-store" }
   );
   const data = await res.json();
-  // console.log(data);
 
   const posts = selectedSkill ? data.posts?.filter(post => post.skill === selectedSkill) : data.posts;
 
