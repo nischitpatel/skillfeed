@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const { user, logout, loading } = useAuth();
 
   const [show, setShow] = useState(true);
@@ -33,29 +35,35 @@ export default function Navbar() {
 
   if (loading) return null;
 
+  const isActive = (path: string) =>
+    pathname === path || pathname.startsWith(path + "/");
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 border-b bg-white transition-transform duration-300 ${
-        show ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 border-b bg-white transition-transform duration-300 ${show ? "translate-y-0" : "-translate-y-full"
+        }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        
+
         {/* Logo */}
-        <Link href="/" className="text-lg font-semibold">
+        <Link href="/" className={`text-lg font-semibold ${isActive("/") ? "text-blue-600" : ""
+          }`}>
           SkillFeed
         </Link>
 
         {/* Desktop nav */}
         {user && (
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/feed" className="text-sm hover:text-blue-600">
+            <Link href="/feed" className={`text-sm hover:text-blue-600 ${isActive("/feed") ? "text-blue-600" : "text-gray-400"
+              }`}>
               Feed
             </Link>
-            <Link href="/create" className="text-sm hover:text-blue-600">
+            <Link href="/create" className={`text-sm hover:text-blue-600 ${isActive("/create") ? "text-blue-600" : "text-gray-400"
+              }`}>
               Create
             </Link>
-            <Link href="/profile" className="text-sm hover:text-blue-600">
+            <Link href="/profile" className={`text-sm hover:text-blue-600 ${isActive("/profile") ? "text-blue-600" : "text-gray-400"
+              }`}>
               Profile
             </Link>
           </nav>
@@ -73,8 +81,8 @@ export default function Navbar() {
 
         {!user && (
           <Link href="/login" className="text-sm hover:text-blue-600">
-              Login / Sign up
-            </Link>
+            Login / Sign up
+          </Link>
         )}
       </div>
     </header>
