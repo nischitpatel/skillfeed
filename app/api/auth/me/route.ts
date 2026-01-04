@@ -1,37 +1,44 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { users } from "../_store";
+import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
 
-export async function GET(req: Request) {
+export async function GET() {
     try {
-        const cookie = req.headers
-            .get("cookie")
-            ?.split("; ")
-            .find(c => c.startsWith("auth_token="));
+        // Read cookie safely
+        const cookieStore = await cookies();
+        const token = cookieStore.get("auth_token")?.value;
 
-        if (!cookie) {
+        if (!token) {
             return NextResponse.json(
                 { error: "Not authenticated" },
                 { status: 401 }
             );
         }
 
-        const token = cookie.split("=")[1];
-
         // Verify JWT
         const decoded = jwt.verify(token, JWT_SECRET) as {
-            userId: string,
-            email: string
-        }
+            userId: string;
+            email: string;
+        };
 
-        // Find user
-        const user = users.find(u => u.id === decoded.userId);
+        // Fetch user from DB
+        const user = await prisma.user.findUnique({
+            where: { id: decoded.userId },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                emailVerified: true,
+                createdAt: true,
+            },
+        });
 
         if (!user) {
             const res = NextResponse.json(
-                { error: "User not found!" },
+                { error: "User not found" },
                 { status: 401 }
             );
             res.cookies.set("auth_token", "", {
@@ -44,16 +51,11 @@ export async function GET(req: Request) {
             return res;
         }
 
-        return NextResponse.json({
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email
-            },
-        });
+        return NextResponse.json({ user });
+
     } catch (err) {
         const res = NextResponse.json(
-            { error: "Invalid or expired token!" },
+            { error: "Invalid or expired token" },
             { status: 401 }
         );
         res.cookies.set("auth_token", "", {
