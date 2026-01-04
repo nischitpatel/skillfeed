@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { users } from "../_store";
+import { prisma } from "@/lib/prisma";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
 
@@ -19,10 +20,14 @@ export async function POST(req: Request) {
     }
 
     // Find user
-    const user = users.find(u => u.email === email);
+    // const user = users.find(u => u.email === email);
+    const user = await prisma.user.findUnique({
+      where: {email},
+    });
+
     if (!user) {
       return NextResponse.json(
-        { error: "Invalid credentials" },
+        { error: "User does not exist" },
         { status: 401 }
       );
     }
@@ -31,7 +36,7 @@ export async function POST(req: Request) {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return NextResponse.json(
-        { error: "Invalid credentials" },
+        { error: "Invalid password" },
         { status: 401 }
       );
     }
