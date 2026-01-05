@@ -9,20 +9,26 @@ type ProfilePageProps = {
 
 async function getProfile(userId: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/profile?userId=${userId}`,
-    { cache: "no-store" }
+    `http://localhost:3000/api/profile?userId=${userId}`,
+    { 
+      cache: "no-store" 
+    }
   );
 
   if (!res.ok) {
     throw new Error("Failed to load profile");
   }
+//   const text = await res.text();
+//   console.log("PROFILE API RAW RESPONSE:", text);
 
+//   throw new Error("STOP");
   return res.json();
 }
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const { userId } = await params;
   const data = await getProfile(userId);
+
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-8 space-y-8">

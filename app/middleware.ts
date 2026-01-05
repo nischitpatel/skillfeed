@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = ["/feed", "/create", "/profile"];
+const protectedRoutes = ["/feed", "/create", "/profile/:userId"];
 const authRoutes = ["/login", "/signup"];
 
 export function middleware(req: NextRequest) {
@@ -33,7 +33,8 @@ export const config = {
   matcher: [
     "/feed/:path*",
     "/create",
-    "/profile/:path*",
+    // "/profile/:path*",
+    "/profile/:userId",
     "/login",
     "/signup",
   ],

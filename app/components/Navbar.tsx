@@ -62,7 +62,7 @@ export default function Navbar() {
               }`}>
               Create
             </Link>
-            <Link href="/profile" className={`text-sm hover:text-blue-600 ${isActive("/profile") ? "text-blue-600" : "text-gray-400"
+            <Link href="/profile/me" className={`text-sm hover:text-blue-600 ${isActive("/profile") ? "text-blue-600" : "text-gray-400"
               }`}>
               Profile
             </Link>
