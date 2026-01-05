@@ -29,7 +29,7 @@ export default function FeedPost({ post, variant = "feed" }: Props) {
       {/* Header */}
       <div className="flex items-center gap-3 text-sm text-gray-600">
         <div className="w-8 h-8 rounded-full bg-gray-200" />
-        <span className="font-medium text-gray-900">{post.author.name}</span>
+        <Link href={`/profile/${post.author.id}`}><span className="font-medium text-gray-900">{post.author.name}</span></Link>
         <SkillTag label={post.skill} />
         <SkillTag label={post.type} />
         <span className="ml-auto text-xs">{post.createdAt}</span>
