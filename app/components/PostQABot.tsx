@@ -33,28 +33,66 @@ export default function PostQABot({ postContent }: Props) {
   async function sendMessage() {
     if (!input.trim() || loading) return;
 
-    const userMessage: Message = {
-      role: "user",
-      content: input,
-    };
-
+    const userMessage: Message = { role: "user", content: input };
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
-    // TEMP mock response
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/posts/qa", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question: input,
+          postContent,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to get answer.");
+
+      const data = await res.json();
+      const assistantMessage: Message = {
+        role: "assistant",
+        content: data.answer,
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (err) {
       setMessages(prev => [
         ...prev,
-        {
-          role: "assistant",
-          content:
-            "Based on the post, Array.map does not mutate the original array. It always returns a new one.",
-        },
+        { role: "assistant", content: "Oops! Something went wrong." },
       ]);
+      console.error(err);
+    } finally {
       setLoading(false);
-    }, 800);
+    }
   }
+
+  // async function sendMessage() {
+  //   if (!input.trim() || loading) return;
+
+  //   const userMessage: Message = {
+  //     role: "user",
+  //     content: input,
+  //   };
+
+  //   setMessages(prev => [...prev, userMessage]);
+  //   setInput("");
+  //   setLoading(true);
+
+  //   // TEMP mock response
+  //   setTimeout(() => {
+  //     setMessages(prev => [
+  //       ...prev,
+  //       {
+  //         role: "assistant",
+  //         content:
+  //           "Based on the post, Array.map does not mutate the original array. It always returns a new one.",
+  //       },
+  //     ]);
+  //     setLoading(false);
+  //   }, 800);
+  // }
 
   return (
     <section className="rounded-xl border border-gray-200 bg-white shadow-sm">
