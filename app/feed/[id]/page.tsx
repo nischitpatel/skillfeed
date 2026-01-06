@@ -3,15 +3,15 @@ import Link from "next/link";
 import FeedPost from "@/app/components/FeedPost";
 import PostQABot from "@/app/components/PostQABot";
 
-// TEMP: replace with API/db later
 async function getPostById(id: string) {
-  const res = await fetch("http://localhost:3000/feed.json", {
+  const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
     cache: "no-store",
   });
 
-  const posts = await res.json();
-//   console.log(posts);
-  return posts.feed.find((p: any) => p.id === id);
+  if(!res.ok) throw new Error("Failed to fetch the post!");
+
+  // return res.json();
+  return res.json();
 }
 
 export default async function PostDetailPage({
