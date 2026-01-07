@@ -38,7 +38,7 @@ export default function BottomNav() {
         </Link>
 
         <Link
-          href="/profile/user"
+          href="/profile/me"
           className={`flex flex-col items-center text-xs ${
             isActive("/profile") ? "text-blue-600" : "text-gray-400"
           }`}
