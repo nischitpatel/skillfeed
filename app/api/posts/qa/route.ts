@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ratelimit } from "@/lib/rate-limit";
 
 type RequestBody = {
   question: string;
@@ -7,6 +8,17 @@ type RequestBody = {
 
 export async function POST(req: Request) {
   try {
+    const ip = req.headers.get("x-forwarded-for") ?? "anonymous";
+
+    const {success} = await ratelimit.limit(ip);
+
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please slow down." },
+        { status: 429 }
+      );
+    }
+
     const body: RequestBody = await req.json();
     const { question, postContent } = body;
 

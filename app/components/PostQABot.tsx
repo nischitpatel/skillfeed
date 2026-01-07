@@ -48,6 +48,19 @@ export default function PostQABot({ postContent }: Props) {
         }),
       });
 
+      if (res.status === 429) {
+        const data = await res.json();
+  
+        setMessages(prev => [
+          ...prev,
+          {
+            role: "assistant",
+            content: `------ ${data.error || "Too many requests. Please slow down."} ------`,
+          },
+        ]);
+        return;
+      }
+
       if (!res.ok) throw new Error("Failed to get answer.");
 
       const data = await res.json();
@@ -60,7 +73,7 @@ export default function PostQABot({ postContent }: Props) {
     } catch (err) {
       setMessages(prev => [
         ...prev,
-        { role: "assistant", content: "Oops! Something went wrong." },
+        { role: "assistant", content: "Oops! Something went wrong" },
       ]);
       console.error(err);
     } finally {
